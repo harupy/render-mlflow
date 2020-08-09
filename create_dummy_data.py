@@ -1,5 +1,4 @@
 import random
-import tempfile
 
 import mlflow
 import mlflow.pyfunc
