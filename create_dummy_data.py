@@ -1,4 +1,5 @@
 import random
+import tempfile
 
 import mlflow
 import mlflow.pyfunc
@@ -14,7 +15,7 @@ def main():
         with mlflow.start_run():
             mlflow.log_param("p", random.random())
             mlflow.log_param("m", random.random())
-            mlflow.log_artifact("README.md")
+            mlflow.log_artifact(__file__)
 
             mlflow.pyfunc.log_model(
                 "model", python_model=DummyModel(), registered_model_name="pyfunc"
