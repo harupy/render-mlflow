@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN pip install mlflow
 
-ENV BASE_DIR /app/mlflow
+ENV BASE_DIR /app/.mlflow
 ENV DATABASE_URI sqlite:///${BASE_DIR}/db
 ENV ARTIFACT_PATH ${BASE_DIR}/artifacts
 
