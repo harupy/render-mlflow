@@ -4,7 +4,13 @@ WORKDIR /app
 
 RUN pip install mlflow
 
-COPY create_dummy_data.py .
-RUN python create_dummy_data.py
+ENV BASE_DIR /tmp/mlflow
+ENV DATABASE_URI sqlite:///${BASE_DIR}/db
+ENV ARTIFACT_PATH ${BASE_DIR}/artifacts
 
-CMD ["mlflow", "ui", "--port=5000", "--host=0.0.0.0"]
+RUN mkdir -p $BASE_DIR
+
+COPY create_dummy_data.py .
+RUN MLFLOW_TRACKING_URI="${DATABASE_URI}" python create_dummy_data.py
+
+CMD mlflow server --port=5000 --host=0.0.0.0 --backend-store-uri="$DATABASE_URI" --default-artifact-root "$ARTIFACT_PATH"
